@@ -2,28 +2,27 @@
 INPUT_FILE_NAME = "input.txt"
 EXAMPLE_FILE_NAME = "example.txt"
 
-LETTERS = ['X', 'M', 'A', 'S']
+XMAS = "XMAS"
 
 
-# Validate coordinates exist then return letter
+# Validate coordinates exist then return letter or nothing
 def get_letter_at(a, b, matrix):
-    return (matrix[a][b] if (a>=0 and a<len(matrix)) and (b>=0 and b<len(matrix[a])) else None)                                
+    return (matrix[a][b] if (a>=0 and a<len(matrix)) and (b>=0 and b<len(matrix[a])) else '')                                
     
 
 # Starting at X possition, check for XMAS word for each direction
-# Break direction is not letter is not matching
 def check_possibility(matrix, a, b):
     counter = 0
     for x in range(-1,2):
         for y in range(-1,2):
+            word_found = "X"
             factor = 1
-            done = False
-            while not done and factor <= 3:
-                if get_letter_at(a+(x*factor), b+(y*factor), matrix) != LETTERS[factor]:
-                    done = True
-                elif factor == 3:
-                    counter += 1
+            while factor <= 3:
+                letter_found = get_letter_at(a+(x*factor), b+(y*factor), matrix)
+                word_found += letter_found
                 factor += 1
+            if word_found == XMAS:
+                counter += 1
     return counter
 
 
